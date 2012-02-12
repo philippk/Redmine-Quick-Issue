@@ -1,3 +1,6 @@
-= quick_issue
+= Quick Issue
 
-Description goes here
+Quick issue Plugin adds a new block to the MyPage. In this block you can add quickly issues for users. Its specially designed for the use case, where each user has its own project for personal todos. So you don't need to select a project, but there need to be a project where the identifier is the same as the user name.
+
+The default is your own user, but you can also change this and add issues for other users.
+
