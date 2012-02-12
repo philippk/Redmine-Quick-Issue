@@ -8,10 +8,10 @@ class QuickIssuesController < ApplicationController
   def create
     call_hook(:controller_issues_new_before_save, { :params => params, :issue => @issue })
     if @issue.save
-      flash[:notice] = "The issue has been saved"
+      flash[:notice] = "Issue \##{@issue.id} created (#{@issue.subject})."
       redirect_to '/my/page'
     else
-      flash[:notice] = "ERROR: The issue has not been saved"
+      flash[:error] = "The issue has not been saved."
       redirect_to '/my/page'
     end
   end
@@ -19,9 +19,10 @@ class QuickIssuesController < ApplicationController
   def find_project
     assigned_to_id = (params[:issue] && params[:issue][:assigned_to_id]) || params[:assigned_to_id]
     user = User.find(assigned_to_id)
-    @project = Project.find_by_identifier(user.login)
-  rescue ActiveRecord::RecordNotFound
-    render_404
+    unless @project = Project.find_by_identifier(user.login)
+      flash[:error] = "No project found for user #{user.login}."
+      redirect_to '/my/page'
+    end
   end
   
   def build_new_issue_from_params
