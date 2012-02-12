@@ -1,0 +1,23 @@
+<h3><%=l(:label_quick_issue)%></h3>
+
+<% @issue = Issue.new %>
+<% @allowed_statuses = @issue.new_statuses_allowed_to(User.current)%>
+<% @priorities = IssuePriority.active %>
+
+<% labelled_tabular_form_for :issue, @issue, :url => {:controller => 'quick_issues', :action => 'create', :project_id => @project},
+                             :html => {:multipart => true, :id => 'issue-form', :class => 'tabular new-issue-form'} do |f| %>
+    <%= error_messages_for 'issue' %>
+    <div class="box">
+    <%= render :partial => 'quickissues/form', :locals => {:f => f} %>
+    </div>
+    <%= submit_tag l(:button_create) %>
+ 											 
+		<%= javascript_tag "Form.Element.focus('issue_subject');" %>
+<% end %>
+
+<div id="preview" class="wiki"></div>
+
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'scm' %>
+    <%= robot_exclusion_tag %>
+<% end %>

@@ -1,0 +1,6 @@
+
+<% fields_for :issue, @issue, :builder => TabularFormBuilder do |f| %>
+
+<p><%= f.text_field :due_date, :size => 10, :disabled => !@issue.leaf? %><%= calendar_for('issue_due_date') if @issue.leaf? %></p>
+
+<% end %>
