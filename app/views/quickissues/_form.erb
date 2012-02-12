@@ -1,11 +1,10 @@
-
 <div id="issue_descr_fields" <%= 'style="display:none"' unless @issue.new_record? || @issue.errors.any? %>>
 <% if @issue.safe_attribute_names.include?('is_private') %>
 <p style="float:right; margin-right:1em;">
   <label class="inline" for="issue_is_private" id="issue_is_private_label"><%= f.check_box :is_private, :no_label => true %> <%= l(:field_is_private) %></label>
 </p>
 <% end %>
-<p><%= f.select :assigned_to_id, principals_options_for_select(User.find(:all))%></p>
+<p><%= f.select :assigned_to_id, principals_options_for_select(User.find(:all), User.current)%></p>
 
 <p><%= f.text_field :subject, :size => 80, :required => true %></p>
 <p><%= f.text_area :description,
